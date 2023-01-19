@@ -85,7 +85,7 @@ var cnt2=0;
 </head>
 <body>
 <h1 style="text-align:center">글쓰기</h1>
-  <form name="articleForm" method="post"   action="${contextPath}/board/addNewArticle.do"   enctype="multipart/form-data">
+<form name="articleForm" method="post"   action="${contextPath}/board/addNewArticle.do"   enctype="multipart/form-data" accept-charset="UTF-8">
     <table border="0" align="center">
       <tr>
 					<td align="right"> 작성자</td>
@@ -100,9 +100,9 @@ var cnt2=0;
 				<td colspan=2><textarea name="content" rows="10" cols="65" maxlength="4000"></textarea> </td>
      </tr>
      <tr>
-			  <td align="right">이미지파일 첨부:  </td>
+<!-- 			  <td align="right">이미지파일 첨부:  </td>
 			  <td> <input type="file" name="imageFileName"  onchange="readURL(this);" /></td>
-			  <td><img  id="previewFirst" src="#"   width=200 height=200/></td>
+			  <td><img  id="previewFirst" src="#"   width=200 height=200/></td> -->
 			  
 			  
 			  <td align="right">이미지파일 첨부</td>

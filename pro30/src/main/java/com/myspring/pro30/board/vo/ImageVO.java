@@ -1,11 +1,13 @@
 package com.myspring.pro30.board.vo;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
 
 public class ImageVO {
 	private int imageFileNO;
+	// URL encoding 이 된상태.
 	private String imageFileName;
 	private Date regDate;
 	private int articleNO;
@@ -17,7 +19,7 @@ public class ImageVO {
 		this.imageFileNO = imageFileNO;
 	}
 	public String getImageFileName() {
-		return imageFileName;
+		return URLDecoder.decode(imageFileName);
 	}
 	public void setImageFileName(String imageFileName) {
 		try {

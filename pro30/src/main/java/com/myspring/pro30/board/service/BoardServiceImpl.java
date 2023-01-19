@@ -1,5 +1,6 @@
 package com.myspring.pro30.board.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,18 +39,33 @@ public class BoardServiceImpl  implements BoardService{
 		// 현재 위치 2번 -> 3번에게 요청(DAO)
 
 	@Override
-	public int addNewArticle(Map articleMap) throws Exception{
+	public int addNewArticleWithImage(Map articleMap) throws Exception{
 		//articleMap 에 담은 정보를 기반으로해서, 해당 글쓰기 작업으로 들어가기. 
 		// 해당 객체에 접근 하기위한 메서드들이 있음. 
 		// 해당 일반글 작성 후 리턴의 결과
 		int articleNO = boardDAO.insertNewArticle(articleMap);
 		// 해당 글을 작성 후, 해당 글의 게시글 번호를 리턴해서, 다시 맵에 재할당.
 		articleMap.put("articleNO", articleNO);
-		// 파일 이미지를 추가하기 위한 단위 메서드.
+		List<ImageVO> imageFileList = (ArrayList)articleMap.get("imageFileList");
+		for(ImageVO imageVO : imageFileList){
+			System.out.println("BoardService 에서 해당 파일명 깨지는지 확인 중 반복문 안 : "+ imageVO.getImageFileName());
+		}
+		// 이미지를 추가하는 기능. 
 		boardDAO.insertNewImage(articleMap);
 		return articleNO;
 	}
-	// 
+	
+	@Override
+	public int addNewArticleWithoutImage(Map articleMap) throws Exception{
+		//articleMap 에 담은 정보를 기반으로해서, 해당 글쓰기 작업으로 들어가기. 
+		// 해당 객체에 접근 하기위한 메서드들이 있음. 
+		// 해당 일반글 작성 후 리턴의 결과
+		int articleNO = boardDAO.insertNewArticle(articleMap);
+		// 해당 글을 작성 후, 해당 글의 게시글 번호를 리턴해서, 다시 맵에 재할당.
+		articleMap.put("articleNO", articleNO);
+		
+		return articleNO;
+	}
 	
 	//다중 파일 보이기
 	@Override

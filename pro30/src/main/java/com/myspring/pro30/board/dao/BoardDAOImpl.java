@@ -72,6 +72,7 @@ public class BoardDAOImpl implements BoardDAO {
 			imageVO.setImageFileNO(++imageFileNO);
 			// 부모 글의 번호를 같이 추가합니다. 
 			imageVO.setArticleNO(articleNO);
+			System.out.println("DAOImpl 에서 해당 파일명 깨지는지 확인 중 반복문 안 : "+ imageVO.getImageFileName());
 		}
 		// 이미지 파일들을 담은 imageFileList 가지고 , 마이바티스로 감. 
 		// 아이디 : insertNewImage
