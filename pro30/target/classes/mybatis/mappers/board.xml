@@ -32,16 +32,22 @@
   
 	<!--단일이미지 추가  -->
 	 
-  <insert id="insertNewArticle"  parameterType="java.util.Map">
+<!--   <insert id="insertNewArticle"  parameterType="java.util.Map">
 		<![CDATA[
 			INSERT into t_board(articleNO,  title, content, imageFileName, id)
 			VALUES(#{articleNO},#{title},	#{content}, #{imageFileName},	#{id})
 		]]>      
-	</insert>
+	</insert> -->
 	
-  <select id="selectNewArticleNO" resultType="int"  >
+<!--   <select id="selectNewArticleNO" resultType="int"  >
 		<![CDATA[
 			SELECT  max(articleNO)+1 from t_board		
+		]]>
+	</select> -->
+	
+	  <select id="selectNewArticleNO" resultType="int"  >
+		<![CDATA[
+			     SELECT  nvl(max(articleNO),0) from t_board	
 		]]>
 	</select>
 	
@@ -73,7 +79,7 @@
   </delete>
 
  <!--다중 이미지 추가 SQL문 -->   
-  <!--
+  <!-- 일반글의 내용 : 제목, 본문 -->
     <insert id="insertNewArticle"  parameterType="java.util.Map">
     <![CDATA[
       insert into t_board(articleNO, id, title, content, imageFileName)
@@ -81,7 +87,7 @@
     ]]>      
   </insert>
 
- 
+  <!-- 파일 이미지들 추가하는 sql  -->
    <insert id="insertNewImage"  parameterType="java.util.Map">
     <foreach item="item"  collection="list"   open="INSERT ALL" 
                   separator=" " close="SELECT * FROM DUAL" >
@@ -89,7 +95,7 @@
       VALUES (#{item.imageFileNO}, #{item.imageFileName}, #{item.articleNO}, sysdate)
     </foreach>
   </insert>
- -->
+
  
   <select id="selectNewImageFileNO" resultType="int"  >
     <![CDATA[

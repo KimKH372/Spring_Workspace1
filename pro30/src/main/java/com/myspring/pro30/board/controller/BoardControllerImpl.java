@@ -122,13 +122,29 @@ public class BoardControllerImpl  implements BoardController{
 	  */
 
 	//다중 이미지 보여주기
+	//해당 URL주소 뒤에 정보 부분 참고 사항.
+		// viewArticle.do?articleNO=1
 	@RequestMapping(value="/board/viewArticle.do" ,method = RequestMethod.GET)
 	public ModelAndView viewArticle(@RequestParam("articleNO") int articleNO,
 			  HttpServletRequest request, HttpServletResponse response) throws Exception{
+		// 해당 뷰는 잘 가지고 와서 괜찮음.
 		String viewName = (String)request.getAttribute("viewName");
+		//viewArticle 뭘까? 현재 위치 1번 -> 2번 갈 예정. 
+		
+		//articleMap 에 뭐가 담겨 있나?
+		// 해당 게시글 번호 articleNO = 1 에 대한
+		// 일반 글과 파일 이미지들이 다 조회 후 리턴 되었음. 
 		Map articleMap=boardService.viewArticle(articleNO);
+		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(viewName);
+		
+		//일반글의 내용을 조회한 결과
+		//articleMap.put("article", articleVO);
+		// 파일 이미지들의 내용을 조회한 결과
+		//articleMap.put("imageFileList", imageFileList);
+		// 키 형식의 이름이 알아야 사용할수 있다. 
+		// 이제 뷰로 가자. viewArticle.jsp
 		mav.addObject("articleMap", articleMap);
 		return mav;
 	}

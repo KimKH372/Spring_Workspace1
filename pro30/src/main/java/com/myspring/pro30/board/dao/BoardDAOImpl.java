@@ -28,20 +28,20 @@ public class BoardDAOImpl implements BoardDAO {
 		@Override
 		public int insertNewArticle(Map articleMap) throws DataAccessException {
 			// selectNewArticleNO 메서드 살펴보기 
-			// 해다 게시글의 글 번호에 대해서 조회 후, 1 증가 시킨 번호이네. 
+			// 해당 게시글의 글 번호에 대해서 조회 후, 1 증가 시킨 번호이네. 
 			// 예) 기존에 글이 2개있다. 조회의 결과, 3이 나옴.
-			int test = 1;
 
+			System.out.println("selectNewArticleNO 호출 전===============");
+			// 최초에 selectNewArticleNO() 호출 하면 오류가 발생. 
+			// 디벨로퍼에서는 동작을 하지만, 자바에서는 실행 하면 오류가 발생. 
+			// 널 체크를 디비에서 nvl 함수로 대체 하겠음.
+			
 			int articleNO = selectNewArticleNO();
-			if(articleNO != 0 ) {
-			articleMap.put("articleNO", articleNO);
+			System.out.println("selectNewArticleNO 호출 후===============");
+			
+			articleMap.put("articleNO", ++articleNO);
 			sqlSession.insert("mapper.board.insertNewArticle",articleMap);
-			} else {
-				// 최초 게시글 작성시, selectNewArticleNO(); 메서드 를 수행 할수 없어서 체크하기.
-				articleNO = 1;
-				articleMap.put("articleNO", articleNO);
-				sqlSession.insert("mapper.board.insertNewArticle",articleMap);
-			}
+		
 			return articleNO;
 		}
     
@@ -58,8 +58,8 @@ public class BoardDAOImpl implements BoardDAO {
 		//articleMap에 담기 이미지 파일 리스트를 꺼내어서 다시 , 재할당.
 		List<ImageVO> imageFileList = (ArrayList)articleMap.get("imageFileList");
 		// 게시글의 글 번호를 가져오는 작업
-				// 왜? 파일 이미지 테이블은 부모 테이블 게시글 테이블 제약 관계가 외래키 관계이므로 
-				// 반드시 필요함. 
+		// 왜? 파일 이미지 테이블은 부모 테이블 게시글 테이블 제약 관계가 외래키 관계이므로 
+		// 반드시 필요함. 
 		int articleNO = (Integer)articleMap.get("articleNO");
 		//selectNewImageFileNO 이 메서드는 뭘까?
 		// 파일 이미지 테이블의 글 번호 
@@ -78,8 +78,8 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.insert("mapper.board.insertNewImage",imageFileList);
 	}
 	
-   
-	
+	// 아이디 : selectArticle
+	// 결과는 해당 게시글 번호에 대한 정보를 조회해서 리턴함.
 	@Override
 	public ArticleVO selectArticle(int articleNO) throws DataAccessException {
 		return sqlSession.selectOne("mapper.board.selectArticle", articleNO);
@@ -96,12 +96,16 @@ public class BoardDAOImpl implements BoardDAO {
 		
 	}
 	
+	//해당 게시글 번호로 파일 테이블에서 해당 게시글 번호에 관련된 파일 이미지 모두를 리턴. 
+	// 리스트에 담기. 
+	// 아이디 : selectImageFileList
 	@Override
 	public List selectImageFileList(int articleNO) throws DataAccessException {
 		List<ImageVO> imageFileList = null;
 		imageFileList = sqlSession.selectList("mapper.board.selectImageFileList",articleNO);
 		return imageFileList;
 	}
+	
 	// 아이디 : selectNewArticleNO
 		// 게시글의 글 번호를 조회하는 역할. 
 		// SELECT  max(articleNO)+1 from t_board	

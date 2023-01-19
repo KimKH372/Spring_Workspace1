@@ -54,10 +54,22 @@ public class BoardServiceImpl  implements BoardService{
 	//다중 파일 보이기
 	@Override
 	public Map viewArticle(int articleNO) throws Exception {
+		// 1번에서 2번으로 해당 게시글의 번호가 넘어 왔음. 
+		// 예) articleNO = 1
+		
+		// 조회된 정보를 담기 위한 임시 컬렉션
 		Map articleMap = new HashMap();
+		// 일반 글의 내용을 담기 위한 임시 객체
+		//selectArticle  뭘까? 
+		// 해당 게시글 번호에 대한 게시글의 정보를 리턴함. 
 		ArticleVO articleVO = boardDAO.selectArticle(articleNO);
+		
+		//파일 이미지들의 내용을 담기 위한 임시 컬렉션
+		//selectImageFileList 뭘까? 
 		List<ImageVO> imageFileList = boardDAO.selectImageFileList(articleNO);
+		// 일반글의 내용을 조회한 결과
 		articleMap.put("article", articleVO);
+		// 파일 이미지들의 내용을 조회한 결과
 		articleMap.put("imageFileList", imageFileList);
 		return articleMap;
 	}

@@ -4,11 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
-<%-- 
+
 <c:set var="article"  value="${articleMap.article}"  />
 <c:set var="imageFileList"  value="${articleMap.imageFileList}"  />
 
- --%>
+
 <%
   request.setCharacterEncoding("UTF-8");
 %> 
@@ -122,7 +122,7 @@
     <textarea rows="20" cols="60"  name="content"  id="i_content"  disabled />${article.content }</textarea>
    </td>  
   </tr>
- <%-- 
+ 
  <c:if test="${not empty imageFileList && imageFileList!='null' }">
 	  <c:forEach var="item" items="${imageFileList}" varStatus="status" >
 		    <tr>
@@ -141,9 +141,9 @@
 			 </tr>
 		</c:forEach>
  </c:if>
- 	 --%>    
+ 	   
  	 
-  <c:choose> 
+  <%-- <c:choose> 
 	  <c:when test="${not empty article.imageFileName && article.imageFileName!='null' }">
 	   	<tr>
 		    <td width="150" align="center" bgcolor="#FF9933"  rowspan="2">
@@ -178,7 +178,7 @@
 				    </td>
 			  </tr>
 		 </c:otherwise>
-	 </c:choose>
+	 </c:choose> --%>
   <tr>
 	   <td width="150" align="center" bgcolor="#FF9933">
 	      등록일자
